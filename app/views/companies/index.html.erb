@@ -3,6 +3,8 @@
   <tr>
   <% @companies.each do |u| %>
     <td><%= u.id %></td>
+    <td><%= u.first_name %></td>
+    <td><%= u.last_name %></td>
     <td><%= u.formatting_post_codes %></td>
   <% end %>
   </tr>
