@@ -3,7 +3,7 @@
   <tr>
   <% @companies.each do |u| %>
     <td><%= u.id %></td>
-    <td><%= u.post_code.present? ? u.post_code.to_s.insert(3, '-') : "" %></td>
+    <td><%= u.formatting_post_codes %></td>
   <% end %>
   </tr>
 </table>
