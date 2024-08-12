@@ -1,0 +1,11 @@
+<br>
+<table>
+  <tr>
+  <% @users.each do |u| %>
+    <td><%= u.id %></td>
+    <td><%= u.first_name %></td>
+    <td><%= u.last_name %></td>
+    <td><%= u.post_code %></td>
+  <% end %>
+  </tr>
+</table>
