@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  include UserDecorator
   # composed_of :post_code,
   #             class_name: 'PostCode',
   #             mapping: %w(post_code value)
