@@ -6,6 +6,8 @@ class User < ApplicationRecord
               class_name: 'FullName',
               mapping: [%w(first_name first_name), %w(last_name last_name)]
 
+  enum sex: { male: 0, female: 1 }
+
   def post_code_valid?
     post_code.valid?
   end
