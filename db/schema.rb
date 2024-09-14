@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_09_14_210235) do
+ActiveRecord::Schema.define(version: 2024_09_14_234521) do
 
   create_table "companies", force: :cascade do |t|
     t.integer "post_code"
@@ -28,6 +28,7 @@ ActiveRecord::Schema.define(version: 2024_09_14_210235) do
     t.string "last_name"
     t.integer "salary"
     t.integer "age"
+    t.integer "sex"
   end
 
 end
