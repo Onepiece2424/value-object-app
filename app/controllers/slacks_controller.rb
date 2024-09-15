@@ -8,7 +8,7 @@ class SlacksController < ApplicationController
 
   def notify_slack_with_links
     # SlackのWebhook URLを設定
-    notifier = Slack::Notifier.new(ENV['SLACK_WEBHOOK_URL'])
+    notifier = SlackNotifier.new
 
     # 通知メッセージの内容
     message = "<!channel> こんにちは！ [クリックしてね](https://github.com/slack-notifier/slack-notifier)"
@@ -17,7 +17,7 @@ class SlacksController < ApplicationController
     formatted_message = Slack::Notifier::Util::LinkFormatter.format(message)
 
     # Slackに通知を送信
-    notifier.ping(formatted_message)
+    notifier.send(formatted_message)
   end
 
   def notify_slack_with_blocks
