@@ -7,4 +7,47 @@ class SlacksController < ApplicationController
     )
     notifier.ping '通知テキスト'
   end
+
+  def notify_slack_with_links
+    # SlackのWebhook URLを設定
+    notifier = Slack::Notifier.new(ENV['SLACK_WEBHOOK_URL'])
+
+    # 通知メッセージの内容
+    message = "<!channel> こんにちは！ [クリックしてね](https://github.com/slack-notifier/slack-notifier)"
+
+    # メッセージ内のリンクをSlack形式に変換
+    formatted_message = Slack::Notifier::Util::LinkFormatter.format(message)
+
+    # Slackに通知を送信
+    notifier.ping(formatted_message)
+  end
+
+  def notify_slack_with_blocks
+    # SlackのWebhook URLを設定
+    notifier = Slack::Notifier.new(ENV['SLACK_WEBHOOK_URL'])
+
+    # 通知するためのブロック形式のデータ
+    blocks = [
+      {
+        "type": "image",
+        "title": {
+          "type": "plain_text",
+          "text": "image1",
+          "emoji": true
+        },
+        "image_url": "https://api.slack.com/img/blocks/bkb_template_images/onboardingComplex.jpg",
+        "alt_text": "image1"
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "Hey there 👋 I'm TaskBot. I'm here to help you create and manage tasks in Slack.\nThere are two ways to quickly create tasks:"
+        }
+      }
+    ]
+
+    # Slackにブロック形式のメッセージを送信
+    notifier.post(blocks: blocks)
+  end
 end
