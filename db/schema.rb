@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_09_15_004450) do
+ActiveRecord::Schema.define(version: 2024_09_15_012335) do
 
   create_table "companies", force: :cascade do |t|
     t.integer "post_code"
@@ -18,6 +18,12 @@ ActiveRecord::Schema.define(version: 2024_09_15_004450) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "first_name"
     t.string "last_name"
+  end
+
+  create_table "new_users", force: :cascade do |t|
+    t.text "name"
+    t.text "email"
+    t.integer "age"
   end
 
   create_table "schools", force: :cascade do |t|
@@ -30,15 +36,8 @@ ActiveRecord::Schema.define(version: 2024_09_15_004450) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "users", force: :cascade do |t|
-    t.integer "post_code"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.string "first_name"
-    t.string "last_name"
-    t.integer "salary"
-    t.integer "age"
-    t.integer "sex"
-  end
+# Could not dump table "users" because of following StandardError
+#   Unknown type '' for column 'post_code'
 
+  add_foreign_key "users", "schools"
 end
