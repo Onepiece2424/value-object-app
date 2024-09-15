@@ -1,4 +1,6 @@
 class SlacksController < ApplicationController
+  skip_before_action :verify_authenticity_token, only: [:send_easy_message]
+
   def send_slack_notification
     notifier = Slack::Notifier.new(
       ENV['SLACK_WEBHOOK_URL'],
@@ -49,5 +51,14 @@ class SlacksController < ApplicationController
 
     # Slackにブロック形式のメッセージを送信
     notifier.post(blocks: blocks)
+  end
+
+  def send_easy_message
+    message = params[:message]
+    notifier = SlackNotifier.new
+    notifier.send(message)
+    render json: { status: 'Message sent to Slack successfully' }
+    rescue => e
+      render json: { status: 'Error sending message to Slack', error: e.message }, status: :unprocessable_entity
   end
 end
