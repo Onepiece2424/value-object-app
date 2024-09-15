@@ -13,12 +13,20 @@ class User < ApplicationRecord
 
   class << self
     def csv_format(users)
-      csv_data = CSV.generate do |csv|
+      CSV.generate do |csv|
         csv << ["ID", "性", "名", "年齢", "性別", "給料"]
+        previous_age = nil
+
         users.each do |user|
-          csv << [user.id, user.first_name, user.last_name, user.age, user.sex, user.salary]
+          csv << format_user_row(user, previous_age)
+          previous_age = user.age
         end
       end
+    end
+
+    def format_user_row(user, previous_age)
+      age = user.age == previous_age ? nil : user.age
+      [user.id, user.first_name, user.last_name, age, user.sex, user.salary]
     end
   end
 
