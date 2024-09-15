@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   end
 
   def csv_output
-    @users = User.all
+    @users = User.all.order(:age)
     send_data(User.csv_format(@users), filename: "ユーザー一覧.csv")
   end
 
