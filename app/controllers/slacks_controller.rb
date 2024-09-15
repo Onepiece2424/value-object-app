@@ -2,12 +2,8 @@ class SlacksController < ApplicationController
   skip_before_action :verify_authenticity_token, only: [:send_easy_message]
 
   def send_slack_notification
-    notifier = Slack::Notifier.new(
-      ENV['SLACK_WEBHOOK_URL'],
-      channel: "##{ENV['SLACK_CHANNEL']}",
-      username: '通知です'
-    )
-    notifier.ping '通知テキスト'
+    notifier = SlackNotifier.new
+    notifier.send("通知テキスト")
   end
 
   def notify_slack_with_links
