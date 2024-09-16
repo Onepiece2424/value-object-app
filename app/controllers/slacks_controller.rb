@@ -1,5 +1,5 @@
 class SlacksController < ApplicationController
-  skip_before_action :verify_authenticity_token, only: [:send_easy_message]
+  skip_before_action :verify_authenticity_token, only: [:send_easy_message, :events]
 
   def send_slack_notification
     notifier = SlackNotifier.new
@@ -56,5 +56,40 @@ class SlacksController < ApplicationController
     render json: { status: 'Message sent to Slack successfully' }
     rescue => e
       render json: { status: 'Error sending message to Slack', error: e.message }, status: :unprocessable_entity
+  end
+
+  def events
+    if params[:token] == ENV['SLACK_VERIFICATION_TOKEN']
+      case params[:type]
+      when 'url_verification'
+        render plain: params[:challenge]
+      when 'event_callback'
+        handle_event(params[:event])
+        head :ok
+      end
+    else
+      head :bad_request
+    end
+  end
+
+  private
+
+  def handle_event(event)
+    return if event[:text] == "応答ありがとうございます！" || event[:subtype].present?
+
+    user = event[:user]
+    text = event[:text]
+    thread_ts = event[:thread_ts] || event[:ts] # 元のメッセージのthread_tsがある場合、それを使う
+
+    # スタンドアップの応答を保存
+    StandupResponse.create(user: user, response: text)
+
+    # スレッド内で返信する
+    SLACK_CLIENT.chat_postMessage(
+      channel: event[:channel],
+      text: "応答ありがとうございます！",
+      thread_ts: thread_ts, # スレッド内に返信
+      as_user: true
+    )
   end
 end
