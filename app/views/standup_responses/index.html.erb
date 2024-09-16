@@ -1,0 +1,23 @@
+<h1>StandupResponses#index</h1>
+<p>Find me in app/views/standup_responses/index.html.erb</p>
+
+<h1>スタンドアップ応答一覧</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>ユーザー</th>
+      <th>応答内容</th>
+      <th>日時</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @responses.each do |response| %>
+      <tr>
+        <td><%= response.user %></td>
+        <td><%= response.response %></td>
+        <td><%= response.created_at %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

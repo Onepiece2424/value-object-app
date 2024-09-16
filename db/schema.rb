@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_09_15_012335) do
+ActiveRecord::Schema.define(version: 2024_09_16_050759) do
 
   create_table "companies", force: :cascade do |t|
     t.integer "post_code"
@@ -34,6 +34,14 @@ ActiveRecord::Schema.define(version: 2024_09_15_012335) do
     t.integer "established_year"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "standup_responses", force: :cascade do |t|
+    t.string "user"
+    t.text "response"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "ts"
   end
 
 # Could not dump table "users" because of following StandardError
