@@ -1,5 +1,5 @@
 class SlacksController < ApplicationController
-  skip_before_action :verify_authenticity_token, only: [:send_easy_message, :events]
+  skip_before_action :verify_authenticity_token, only: [:send_easy_message, :events, :file_upload]
 
   def send_slack_notification
     notifier = SlackNotifier.new
@@ -71,6 +71,31 @@ class SlacksController < ApplicationController
       head :bad_request
     end
   end
+
+  def file_upload
+    file = params[:file].tempfile # アップロードされたファイルの一時ファイル
+    filename = params[:file].original_filename # 元のファイル名
+    uploader = SlackFileUploader.new(ENV['SLACK_API_TOKEN'])
+    file_url = uploader.upload_file(file.read, filename)
+    render json: { message: "File uploaded successfully", file_url: file_url }, status: :ok
+  end
+
+  # def file_upload
+  #   file = params[:file].tempfile # アップロードされたファイルの一時ファイル
+  #   filename = params[:file].original_filename # 元のファイル名
+
+  #   # 環境変数にSlackのAPIトークンを設定することを推奨
+  #   uploader = SlackFileUploader.new(ENV['SLACK_API_TOKEN'])
+
+  #   # ファイルの中身を読み込み
+  #   file_content = File.read(file.path)
+
+  #   # Slackにファイルをアップロード
+  #   file_url = uploader.upload_file(file_content, filename)
+
+  #   # 成功メッセージとファイルのURLをJSONとして返す
+  #   render json: { message: "File uploaded successfully", file_url: file_url }, status: :ok
+  # end
 
   private
 

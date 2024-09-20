@@ -7,5 +7,6 @@ Rails.application.routes.draw do
   get 'notify_slack_with_blocks', to: 'slacks#notify_slack_with_blocks'
   post 'send_easy_message', to: 'slacks#send_easy_message'
   post 'events', to: 'slacks#events'
+  post 'file_upload', to: 'slacks#file_upload'
   resources :standup_responses, only: [:index]
 end
