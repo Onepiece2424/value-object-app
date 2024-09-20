@@ -73,10 +73,13 @@ class SlacksController < ApplicationController
   end
 
   def file_upload
+    notifier = Slack::Notifier.new(ENV['SLACK_WEBHOOK_URL'])
     file = params[:file].tempfile # アップロードされたファイルの一時ファイル
     filename = params[:file].original_filename # 元のファイル名
     uploader = SlackFileUploader.new(ENV['SLACK_API_TOKEN'])
     file_url = uploader.upload_file(file.read, filename)
+    text = SlackFormat.file_upload_format(file_url)
+    notifier.post(blocks: text)
     render json: { message: "File uploaded successfully", file_url: file_url }, status: :ok
   end
 
