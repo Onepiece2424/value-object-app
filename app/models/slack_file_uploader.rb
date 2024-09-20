@@ -21,34 +21,6 @@ class SlackFileUploader
     get_file_permalink(file_id)
   end
 
-  # def upload_file(file_content, filename)
-  #   uri = URI.parse(SLACK_API_URL)
-  #   request = Net::HTTP::Post.new(uri)
-
-  #   form_data = [
-  #     ['file', file_content, { filename: filename }],
-  #     ['token', @oauth_token],
-  #     ['channels', '#general'] # アップロードするチャンネル名を指定
-  #   ]
-
-  #   request.set_form(form_data, 'multipart/form-data')
-
-  #   req_options = {
-  #     use_ssl: uri.scheme == 'https',
-  #   }
-
-  #   response = Net::HTTP.start(uri.hostname, uri.port, req_options) do |http|
-  #     http.request(request)
-  #   end
-
-  #   result = JSON.parse(response.body)
-  #   if result['ok']
-  #     result['file']['permalink'] # アップロードされたファイルのURLを返す
-  #   else
-  #     raise "Slack API Error: #{result['error']}"
-  #   end
-  # end
-
   private
 
   # ファイルアップロード用URLを取得する
