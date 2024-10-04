@@ -17,7 +17,9 @@
         <td><%= item.description %></td>
         <td><%= item.price %></td>
         <td><%= item.stock %></td>
-        <td><%= item.production_dates.pluck(:manufacture_date) %></td>
+        <td>
+          <%= item.production_dates.pluck(:manufacture_date).map { |date| date.strftime('%Y/%m/%d(%a)') }.join(', ') %>
+        </td>
       </tr>
     <% end %>
   </tbody>
