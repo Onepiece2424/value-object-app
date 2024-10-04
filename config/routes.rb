@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
-  get 'standup_responses/index'
-  resources :users, :companies
+  resources :users, :companies, :items, :production_dates
   get 'csv_output', to: 'users#csv_output'
   get 'send_slack_notification', to: 'slacks#send_slack_notification'
   get 'notify_slack_with_links', to: 'slacks#notify_slack_with_links'
