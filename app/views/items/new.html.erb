@@ -1,2 +1,42 @@
 <h1>Items#new</h1>
 <p>Find me in app/views/items/new.html.erb</p>
+
+<!-- app/views/items/new.html.erb -->
+<%= form_with(model: @item, local: true) do |form| %>
+
+  <% if @item.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@item.errors.count, "error") %> prevented this item from being saved:</h2>
+      <ul>
+        <% @item.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :name, "Item Name" %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div>
+    <%= form.label :description, "Description" %>
+    <%= form.text_area :description %>
+  </div>
+
+  <div>
+    <%= form.label :price, "Price" %>
+    <%= form.number_field :price, step: 0.01 %>
+  </div>
+
+  <div>
+    <%= form.label :stock, "Stock Quantity" %>
+    <%= form.number_field :stock %>
+  </div>
+
+  <div>
+    <%= form.submit "Create Item" %>
+  </div>
+
+<% end %>
