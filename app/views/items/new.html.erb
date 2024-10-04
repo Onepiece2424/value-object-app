@@ -1,3 +1,4 @@
+<div class="item-main-form">
 <%= form_with(model: @item, local: true) do |form| %>
 
   <% if @item.errors.any? %>
@@ -11,22 +12,22 @@
     </div>
   <% end %>
 
-  <div>
+  <div class="item-form">
     <%= form.label :name, "Item Name" %>
     <%= form.text_field :name %>
   </div>
 
-  <div>
+  <div class="item-form">
     <%= form.label :description, "Description" %>
     <%= form.text_area :description %>
   </div>
 
-  <div>
+  <div class="item-form">
     <%= form.label :price, "Price" %>
     <%= form.number_field :price, step: 0.01 %>
   </div>
 
-  <div>
+  <div class="item-form">
     <%= form.label :stock, "Stock Quantity" %>
     <%= form.number_field :stock %>
   </div>
@@ -42,11 +43,11 @@
     <% end %>
   </div>
 
-  <div>
+  <div class="item-form">
     <button type="button" id="add-production-date-btn">生産日を追加する</button>
   </div>
 
-  <div>
+  <div class="item-form">
     <%= form.submit "Create Item" %>
   </div>
 
@@ -82,3 +83,4 @@
     });
   });
 </script>
+</div>
