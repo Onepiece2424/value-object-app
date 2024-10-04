@@ -1,7 +1,3 @@
-<h1>Items#new</h1>
-<p>Find me in app/views/items/new.html.erb</p>
-
-<!-- app/views/items/new.html.erb -->
 <%= form_with(model: @item, local: true) do |form| %>
 
   <% if @item.errors.any? %>
@@ -35,8 +31,54 @@
     <%= form.number_field :stock %>
   </div>
 
+  <div class="production-date-area">
+    <%= form.fields_for :production_dates do |pd_form| %>
+      <div class="production-date-group" data-index="<%= pd_form.index %>">
+        <%= pd_form.label :manufacture_date, "Manufacture Date" %>
+        <%= pd_form.date_field :manufacture_date %>
+        <%= pd_form.hidden_field :_destroy %>
+        <span class="delete-form-btn">削除する</span>
+      </div>
+    <% end %>
+  </div>
+
+  <div>
+    <button type="button" id="add-production-date-btn">生産日を追加する</button>
+  </div>
+
   <div>
     <%= form.submit "Create Item" %>
   </div>
 
 <% end %>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const productionDateArea = document.querySelector('.production-date-area');
+    const addProductionDateBtn = document.getElementById('add-production-date-btn');
+
+    addProductionDateBtn.addEventListener('click', () => {
+      const newIndex = productionDateArea.children.length;
+      const newGroup = document.createElement('div');
+      newGroup.className = 'production-date-group';
+      newGroup.dataset.index = newIndex;
+
+      newGroup.innerHTML = `
+        <label for="item_production_dates_attributes_${newIndex}_manufacture_date">Manufacture Date</label>
+        <input type="date" name="item[production_dates_attributes][${newIndex}][manufacture_date]" id="item_production_dates_attributes_${newIndex}_manufacture_date">
+        <input type="hidden" name="item[production_dates_attributes][${newIndex}][_destroy]" id="item_production_dates_attributes_${newIndex}__destroy">
+        <span class="delete-form-btn">削除する</span>
+      `;
+
+      productionDateArea.appendChild(newGroup);
+    });
+
+    productionDateArea.addEventListener('click', (e) => {
+      if (e.target.classList.contains('delete-form-btn')) {
+        const group = e.target.closest('.production-date-group');
+        group.querySelector('input[type="hidden"]').value = '1';  // 削除フラグをセット
+        group.style.display = 'none';  // 見た目上、削除
+      }
+    });
+  });
+</script>

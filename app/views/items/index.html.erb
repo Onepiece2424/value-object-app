@@ -3,10 +3,11 @@
 <table>
   <thead>
     <tr>
-      <th>Name</th>
-      <th>Description</th>
-      <th>Price</th>
-      <th>Stock</th>
+      <th>商品名</th>
+      <th>説明</th>
+      <th>価格</th>
+      <th>在庫量</th>
+      <th>製造日</th>
     </tr>
   </thead>
   <tbody>
@@ -14,8 +15,9 @@
       <tr>
         <td><%= item.name %></td>
         <td><%= item.description %></td>
-        <td><%= number_to_currency(item.price) %></td>
+        <td><%= item.price %></td>
         <td><%= item.stock %></td>
+        <td><%= item.production_dates.pluck(:manufacture_date) %></td>
       </tr>
     <% end %>
   </tbody>
