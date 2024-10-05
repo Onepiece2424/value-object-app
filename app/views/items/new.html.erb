@@ -34,23 +34,22 @@
       </tr>
 
       <tr>
-        <td colspan="2">
+        <td>
+          <div class="label-area">
+            <label for="manufacture_date">Manufacture Date</label>
+            <button type="button" id="add-production-date-btn">生産日を追加する</button>
+          </div>
+        </td>
+        <td>
           <div class="production-date-area">
             <%= form.fields_for :production_dates do |pd_form| %>
               <div class="production-date-group" data-index="<%= pd_form.index %>">
-                <%= pd_form.label :manufacture_date, "Manufacture Date" %>
                 <%= pd_form.date_field :manufacture_date %>
                 <%= pd_form.hidden_field :_destroy %>
                 <span class="delete-form-btn">削除する</span>
               </div>
             <% end %>
           </div>
-        </td>
-      </tr>
-
-      <tr>
-        <td colspan="2">
-          <button type="button" id="add-production-date-btn">生産日を追加する</button>
         </td>
       </tr>
 
@@ -74,7 +73,6 @@
       newGroup.dataset.index = newIndex;
 
       newGroup.innerHTML = `
-        <label for="item_production_dates_attributes_${newIndex}_manufacture_date">Manufacture Date</label>
         <input type="date" name="item[production_dates_attributes][${newIndex}][manufacture_date]" id="item_production_dates_attributes_${newIndex}_manufacture_date">
         <input type="hidden" name="item[production_dates_attributes][${newIndex}][_destroy]" id="item_production_dates_attributes_${newIndex}__destroy">
         <span class="delete-form-btn">削除する</span>
