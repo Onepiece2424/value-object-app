@@ -25,12 +25,12 @@
 
       <tr>
         <td><%= form.label :price, "Price" %></td>
-        <td><%= form.number_field :price, step: 0.01 %></td>
+        <td><%= form.number_field :price, min: 1 %></td>
       </tr>
 
       <tr>
         <td><%= form.label :stock, "Stock Quantity" %></td>
-        <td><%= form.number_field :stock %></td>
+        <td><%= form.number_field :stock, min: 1 %></td>
       </tr>
 
       <tr>
