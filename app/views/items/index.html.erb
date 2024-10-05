@@ -12,15 +12,37 @@
   </thead>
   <tbody>
     <% @items.each do |item| %>
-      <tr>
-        <td><%= item.name %></td>
-        <td><%= item.description %></td>
-        <td><%= item.price %></td>
-        <td><%= item.stock %></td>
-        <td>
-          <%= item.production_dates.pluck(:manufacture_date).map { |date| date.strftime('%Y/%m/%d(%a)') }.join(', ') %>
-        </td>
-      </tr>
+      <% if item.production_dates.any? %>
+        <% item.production_dates.each_with_index do |production_date, index| %>
+          <tr>
+            <% if index == 0 %>
+              <!-- 最初の行には商品データを表示 -->
+              <td><%= item.name %></td>
+              <td><%= item.description %></td>
+              <td><%= item.price %></td>
+              <td><%= item.stock %></td>
+            <% else %>
+              <!-- 2行目以降は商品データを空白に -->
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            <% end %>
+            <!-- 製造日のデータは常に表示 -->
+            <td><%= production_date.manufacture_date.strftime('%Y/%m/%d(%a)') %></td>
+          </tr>
+        <% end %>
+      <% else %>
+        <!-- 製造日がない場合でも商品データを表示 -->
+        <tr>
+          <td><%= item.name %></td>
+          <td><%= item.description %></td>
+          <td><%= item.price %></td>
+          <td><%= item.stock %></td>
+          <!-- 製造日のデータがないので空白を表示 -->
+          <td></td>
+        </tr>
+      <% end %>
     <% end %>
   </tbody>
 </table>
