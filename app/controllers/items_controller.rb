@@ -9,8 +9,8 @@ class ItemsController < ApplicationController
   end
 
   def create
-    @item = Item.new(item_params)
-    if @item.save
+    form = ItemForm.new(item_params)
+    if form.save_item_with_dates
       redirect_to items_path
     else
       render :new
@@ -20,6 +20,10 @@ class ItemsController < ApplicationController
   private
 
   def item_params
-    params.require(:item).permit(:name, :description, :price, :stock, production_dates_attributes: [:id, :manufacture_date, :_destroy])
+    params.require(:item).permit(
+      :name, :description, :price, :stock,
+      production_dates: [:manufacture_date, :_destroy],
+      production_dates_attributes: [:manufacture_date, :_destroy]
+    )
   end
 end
