@@ -3,6 +3,7 @@
 <table>
   <thead>
     <tr>
+      <th>商品ID</th>
       <th>商品名</th>
       <th>説明</th>
       <th>価格</th>
@@ -17,12 +18,14 @@
           <tr>
             <% if index == 0 %>
               <!-- 最初の行には商品データを表示 -->
+              <td><%= item.id %></td>
               <td><%= item.name %></td>
               <td><%= item.description %></td>
               <td><%= item.price %></td>
               <td><%= item.stock %></td>
             <% else %>
               <!-- 2行目以降は商品データを空白に -->
+              <td></td>
               <td></td>
               <td></td>
               <td></td>
@@ -35,6 +38,7 @@
       <% else %>
         <!-- 製造日がない場合でも商品データを表示 -->
         <tr>
+          <td><%= item.id %></td>
           <td><%= item.name %></td>
           <td><%= item.description %></td>
           <td><%= item.price %></td>
