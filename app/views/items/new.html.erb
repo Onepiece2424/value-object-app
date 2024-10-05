@@ -60,34 +60,49 @@
 
   <% end %>
 
+  <script>
+    // ページのDOMが完全に読み込まれたら処理を開始する
+    document.addEventListener('DOMContentLoaded', () => {
+        // 製造日入力フォームを表示するエリアを取得
+        const productionDateArea = document.querySelector('.production-date-area');
+        // 製造日追加ボタンを取得
+        const addProductionDateBtn = document.getElementById('add-production-date-btn');
 
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const productionDateArea = document.querySelector('.production-date-area');
-    const addProductionDateBtn = document.getElementById('add-production-date-btn');
+        // 製造日追加ボタンがクリックされたときの処理
+        addProductionDateBtn.addEventListener('click', () => {
+            // 既存のフォーム数を基に、新しいフォームのインデックスを決定
+            const newIndex = productionDateArea.children.length;
 
-    addProductionDateBtn.addEventListener('click', () => {
-      const newIndex = productionDateArea.children.length;
-      const newGroup = document.createElement('div');
-      newGroup.className = 'production-date-group';
-      newGroup.dataset.index = newIndex;
+            // 新しい製造日入力フォームを作成
+            const newGroup = document.createElement('div');
+            newGroup.className = 'production-date-group';  // フォームにクラスを追加
+            newGroup.dataset.index = newIndex;  // 新しいインデックスをdata属性に設定
 
-      newGroup.innerHTML = `
-        <input type="date" name="item[production_dates_attributes][${newIndex}][manufacture_date]" id="item_production_dates_attributes_${newIndex}_manufacture_date">
-        <input type="hidden" name="item[production_dates_attributes][${newIndex}][_destroy]" id="item_production_dates_attributes_${newIndex}__destroy">
-        <span class="delete-form-btn">削除する</span>
-      `;
+            // フォームの内容をHTMLとして追加（製造日入力フィールドと削除用ボタン）
+            newGroup.innerHTML = `
+                <input type="date" name="item[production_dates_attributes][${newIndex}][manufacture_date]" id="item_production_dates_attributes_${newIndex}_manufacture_date">
+                <input type="hidden" name="item[production_dates_attributes][${newIndex}][_destroy]" id="item_production_dates_attributes_${newIndex}__destroy">
+                <span class="delete-form-btn">削除する</span>
+            `;
 
-      productionDateArea.appendChild(newGroup);
+            // 新しいフォームをエリアに追加
+            productionDateArea.appendChild(newGroup);
+        });
+
+        // 製造日エリア内で「削除する」ボタンがクリックされたときの処理
+        productionDateArea.addEventListener('click', (e) => {
+            // クリックされた要素が「削除する」ボタンである場合
+            if (e.target.classList.contains('delete-form-btn')) {
+                // 削除ボタンに対応する製造日入力フォーム全体を取得
+                const group = e.target.closest('.production-date-group');
+
+                // 削除フラグ（_destroy）をセット（サーバー側で削除されるように）
+                group.querySelector('input[type="hidden"]').value = '1';
+
+                // フォームを非表示にして見た目上削除する（実際にはサーバー側で削除）
+                group.style.display = 'none';
+            }
+        });
     });
-
-    productionDateArea.addEventListener('click', (e) => {
-      if (e.target.classList.contains('delete-form-btn')) {
-        const group = e.target.closest('.production-date-group');
-        group.querySelector('input[type="hidden"]').value = '1';  // 削除フラグをセット
-        group.style.display = 'none';  // 見た目上、削除
-      }
-    });
-  });
-</script>
+  </script>
 </div>
