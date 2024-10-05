@@ -1,57 +1,66 @@
 <div class="item-main-form">
-<%= form_with(model: @item, local: true) do |form| %>
+  <%= form_with(model: @item, local: true) do |form| %>
 
-  <% if @item.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@item.errors.count, "error") %> prevented this item from being saved:</h2>
-      <ul>
-        <% @item.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="item-form">
-    <%= form.label :name, "Item Name" %>
-    <%= form.text_field :name %>
-  </div>
-
-  <div class="item-form">
-    <%= form.label :description, "Description" %>
-    <%= form.text_area :description %>
-  </div>
-
-  <div class="item-form">
-    <%= form.label :price, "Price" %>
-    <%= form.number_field :price, step: 0.01 %>
-  </div>
-
-  <div class="item-form">
-    <%= form.label :stock, "Stock Quantity" %>
-    <%= form.number_field :stock %>
-  </div>
-
-  <div class="production-date-area">
-    <%= form.fields_for :production_dates do |pd_form| %>
-      <div class="production-date-group" data-index="<%= pd_form.index %>">
-        <%= pd_form.label :manufacture_date, "Manufacture Date" %>
-        <%= pd_form.date_field :manufacture_date %>
-        <%= pd_form.hidden_field :_destroy %>
-        <span class="delete-form-btn">削除する</span>
+    <% if @item.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@item.errors.count, "error") %> prevented this item from being saved:</h2>
+        <ul>
+          <% @item.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
       </div>
     <% end %>
-  </div>
 
-  <div class="item-form">
-    <button type="button" id="add-production-date-btn">生産日を追加する</button>
-  </div>
+    <table class="item-form-table">
+      <tr>
+        <td><%= form.label :name, "Item Name" %></td>
+        <td><%= form.text_field :name %></td>
+      </tr>
 
-  <div class="item-form">
-    <%= form.submit "Create Item" %>
-  </div>
+      <tr>
+        <td><%= form.label :description, "Description" %></td>
+        <td class="item-form-description"><%= form.text_area :description %></td>
+      </tr>
 
-<% end %>
+      <tr>
+        <td><%= form.label :price, "Price" %></td>
+        <td><%= form.number_field :price, step: 0.01 %></td>
+      </tr>
+
+      <tr>
+        <td><%= form.label :stock, "Stock Quantity" %></td>
+        <td><%= form.number_field :stock %></td>
+      </tr>
+
+      <tr>
+        <td colspan="2">
+          <div class="production-date-area">
+            <%= form.fields_for :production_dates do |pd_form| %>
+              <div class="production-date-group" data-index="<%= pd_form.index %>">
+                <%= pd_form.label :manufacture_date, "Manufacture Date" %>
+                <%= pd_form.date_field :manufacture_date %>
+                <%= pd_form.hidden_field :_destroy %>
+                <span class="delete-form-btn">削除する</span>
+              </div>
+            <% end %>
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <td colspan="2">
+          <button type="button" id="add-production-date-btn">生産日を追加する</button>
+        </td>
+      </tr>
+
+      <tr>
+        <td colspan="2"><%= form.submit "Create Item" %></td>
+      </tr>
+    </table>
+
+  <% end %>
+
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {

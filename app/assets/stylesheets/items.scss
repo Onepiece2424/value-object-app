@@ -27,3 +27,10 @@ td {
 .item-form {
   margin: 10px 0;
 }
+
+.item-form-description {
+  height: 300px;
+  textarea {
+    height: 300px;
+  }
+}
